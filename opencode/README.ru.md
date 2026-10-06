@@ -2,7 +2,7 @@
 
 [English version](README.md)
 
-Рецепт для **opencode v1** (проверено на 1.18.34). Поддержка opencode v2, Codex,
+Рецепт для **opencode v1** (проверено на 1.18.34). Также доступен [рецепт Codex](../codex/README.ru.md). Поддержка opencode v2,
 Claude Code и Grok — в планах, см. [корневой README](../README.ru.md).
 
 Инструкция описывает, как поднять self-hosted веб-поиск для AI-агента и заменить им

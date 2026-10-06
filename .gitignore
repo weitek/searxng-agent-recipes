@@ -1,5 +1,9 @@
-# Created from settings.yml.example by opencode/scripts/install.sh; contains a secret_key
+# Created from settings.yml.example by a recipe installer; contains a secret_key
 searxng/config/settings.yml
 
-# Backups of opencode.json made by install.sh
+# Configuration backups made by recipe installers
 *.bak-*
+
+# Python verification cache
+__pycache__/
+*.pyc

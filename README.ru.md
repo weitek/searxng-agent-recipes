@@ -31,7 +31,7 @@ agent CLI  ──stdio──▶  npx mcp-searxng  ──HTTP──▶  SearXNG (
 |---|---|---|
 | opencode v1 | Проверено (1.18.34) | [opencode/README.ru.md](opencode/README.ru.md) |
 | opencode v2 | В планах | — |
-| Codex | В планах | — |
+| Codex CLI | Проверено (0.160.1, Linux/Docker) | [codex/README.ru.md](codex/README.ru.md) |
 | Claude Code | В планах | — |
 | Grok | В планах | — |
 
@@ -43,16 +43,25 @@ agent CLI  ──stdio──▶  npx mcp-searxng  ──HTTP──▶  SearXNG (
 │   ├── docker-compose.yml
 │   └── config/
 │       └── settings.yml.example
-└── opencode/                # рецепт для opencode
-    ├── README.md            # English version
-    ├── README.ru.md         # этот рецепт на русском
+├── opencode/                # рецепт для opencode
+│   ├── README.md            # English version
+│   ├── README.ru.md         # этот рецепт на русском
+│   └── scripts/
+│       ├── install.sh       # развернуть SearXNG + прописать MCP в opencode
+│       └── verify.sh        # проверить весь стек
+└── codex/                   # рецепт для Codex CLI
+    ├── README.md
+    ├── README.ru.md
+    ├── config.toml.example
+    ├── AGENTS.md.example
     └── scripts/
-        ├── install.sh       # развернуть SearXNG + прописать MCP в opencode
-        └── verify.sh        # проверить весь стек
+        ├── install.sh
+        ├── verify.sh
+        └── verify_mcp.py
 ```
 
-Стек `searxng/` не привязан к клиенту и общий для всех рецептов: будущие рецепты
-(Codex, Claude Code, Grok) переиспользуют тот же контейнер. Рабочий
+Стек `searxng/` не привязан к клиенту: opencode и Codex используют общий контейнер.
+Будущие рецепты Claude Code и Grok смогут переиспользовать его. Рабочий
 `searxng/config/settings.yml` создаётся установщиком из `settings.yml.example` и
 находится в `.gitignore`, так как содержит `secret_key` инстанса.
 
@@ -72,6 +81,20 @@ bash opencode/scripts/verify.sh    # проверить весь стек
 [§5 рецепта](opencode/README.ru.md#5-правила-для-агента-agentsmd) в свой `AGENTS.md`
 и перезапустите opencode. Встроенный `websearch` отключается в пользу MCP-инструментов
 `searxng_*`.
+
+## Быстрый старт (Codex)
+
+Требования: Linux, Docker + Compose v2 или новее, Codex CLI, Python >= 3.11 и `curl`.
+MCP работает в Docker, Node.js на хосте не нужен.
+
+```bash
+bash codex/scripts/install.sh
+bash codex/scripts/verify.sh
+```
+
+Перезапустите Codex и откройте `/mcp`. Ручная настройка, вариант с npx и правила
+агента: [рецепт для Codex](codex/README.ru.md). Проверка выполняет реальный поиск
+через MCP и требует ссылки в выдаче.
 
 ## Безопасность
 

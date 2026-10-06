@@ -28,7 +28,7 @@ agent CLI  ──stdio──▶  npx mcp-searxng  ──HTTP──▶  SearXNG (
 |---|---|---|
 | opencode v1 | Tested (1.18.34) | [opencode/README.md](opencode/README.md) |
 | opencode v2 | Planned | — |
-| Codex | Planned | — |
+| Codex CLI | Tested (0.160.1, Linux/Docker) | [codex/README.md](codex/README.md) |
 | Claude Code | Planned | — |
 | Grok | Planned | — |
 
@@ -40,16 +40,26 @@ agent CLI  ──stdio──▶  npx mcp-searxng  ──HTTP──▶  SearXNG (
 │   ├── docker-compose.yml
 │   └── config/
 │       └── settings.yml.example
-└── opencode/                # opencode recipe
-    ├── README.md            # this recipe in English
-    ├── README.ru.md         # на русском
+├── opencode/                # opencode recipe
+│   ├── README.md            # this recipe in English
+│   ├── README.ru.md         # на русском
+│   └── scripts/
+│       ├── install.sh       # deploy SearXNG + wire MCP into opencode
+│       └── verify.sh        # check the whole stack
+└── codex/                   # Codex CLI recipe
+    ├── README.md
+    ├── README.ru.md
+    ├── config.toml.example
+    ├── AGENTS.md.example
     └── scripts/
-        ├── install.sh       # deploy SearXNG + wire MCP into opencode
-        └── verify.sh        # check the whole stack
+        ├── install.sh
+        ├── verify.sh
+        └── verify_mcp.py
 ```
 
-The `searxng/` stack is client-agnostic and shared: future recipes (Codex, Claude Code,
-Grok) will reuse the same container. The real `searxng/config/settings.yml` is created by
+The `searxng/` stack is client-agnostic: opencode and Codex share the same container.
+Future Claude Code and Grok recipes can reuse it too. The real
+`searxng/config/settings.yml` is created by
 the installer from `settings.yml.example` and is gitignored because it contains the
 instance `secret_key`.
 
@@ -69,6 +79,20 @@ Then add the agent rule from
 [§5 of the recipe](opencode/README.md#5-agent-rules-agentsmd) to your `AGENTS.md` and
 restart opencode. The recipe's built-in `websearch` is disabled in favor of the
 `searxng_*` MCP tools.
+
+## Quick start (Codex)
+
+Requirements: Linux, Docker + Compose v2 or newer, Codex CLI, Python >= 3.11 and `curl`.
+The MCP server runs in Docker; host Node.js is unnecessary.
+
+```bash
+bash codex/scripts/install.sh
+bash codex/scripts/verify.sh
+```
+
+Restart Codex and open `/mcp`. Manual configuration, the npx alternative and agent
+rules are in the [Codex recipe](codex/README.md). Verification performs a real MCP
+search and requires source URLs in the results.
 
 ## Security
 

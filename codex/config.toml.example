@@ -1,0 +1,12 @@
+# Merge these tables into ~/.codex/config.toml (do not replace the whole file).
+# Docker launcher: Linux only. Pull the image before starting Codex.
+[mcp_servers.searxng]
+command = "docker"
+args = ["run", "--rm", "-i", "--network", "host", "-e", "SEARXNG_URL", "-e", "MCP_HTTP_PORT=", "isokoliuk/mcp-searxng@sha256:47c2c520c06b396b89d34bda8a4cd5961e04e4d35c59b931f63d617be45245b5"]
+startup_timeout_sec = 30
+tool_timeout_sec = 60
+enabled = true
+
+[mcp_servers.searxng.env]
+SEARXNG_URL = "http://127.0.0.1:8888"
+MCP_HTTP_PORT = ""

@@ -1,0 +1,23 @@
+use_default_settings: true
+
+general:
+  instance_name: "MCP Search"
+  donation_url: false
+  contact_url: false
+
+server:
+  # settings.yml создаётся из этого файла скриптом opencode/scripts/install.sh:
+  # секрет генерируется и подставляется автоматически (openssl rand -hex 32).
+  secret_key: "CHANGE_ME_GENERATED_BY_INSTALL_SH"
+  # limiter обязательно false, иначе JSON API отвечает 429/403
+  limiter: false
+  public_instance: false
+  image_proxy: false
+
+search:
+  # format=json нужен mcp-searxng; без него поиск из MCP не работает
+  formats:
+    - html
+    - json
+  safe_search: 0
+  autocomplete: ""

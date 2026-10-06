@@ -1,0 +1,5 @@
+# Created from settings.yml.example by opencode/scripts/install.sh; contains a secret_key
+searxng/config/settings.yml
+
+# Backups of opencode.json made by install.sh
+*.bak-*
